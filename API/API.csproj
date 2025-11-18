@@ -7,6 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Extensions\**" />
+      <Content Remove="Extensions\**" />
+      <EmbeddedResource Remove="Extensions\**" />
+      <None Remove="Extensions\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <!-- For Identity -->
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.10" />
@@ -28,7 +35,6 @@
 
     <ItemGroup>
       <Folder Include="Controllers\" />
-      <Folder Include="Extensions\" />
     </ItemGroup>
 
     <ItemGroup>

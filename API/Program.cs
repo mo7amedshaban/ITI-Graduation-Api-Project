@@ -16,8 +16,8 @@ builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseSqlServer(connectionString,b => b.MigrationsAssembly(typeof(AppDBContext).Assembly.FullName));
 });
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddRoles<IdentityRole>()
+builder.Services.AddIdentityApiEndpoints<IdentityUser<Guid>>()
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<AppDBContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -54,8 +54,7 @@ builder.Services.AddControllers(options =>
     });
 
 builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen(); // configured above
-//builder.Services.AddSwaggerUI();
+
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var app = builder.Build();
@@ -69,7 +68,7 @@ app.UseExceptionHandler();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapIdentityApi<IdentityUser>();
+
 
 app.UseHttpsRedirection();
 
@@ -79,7 +78,3 @@ app.UseAuthorization();
 app.Run();
 
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

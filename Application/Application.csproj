@@ -7,24 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Behaviours\" />
-      <Folder Include="Features\Courses\Commands\" />
-      <Folder Include="Features\Courses\DTOs\" />
-      <Folder Include="Features\Courses\Mappers\" />
-      <Folder Include="Features\Courses\Queries\" />
-      <Folder Include="Features\Students\Commands\" />
-      <Folder Include="Features\Students\DTOs\" />
-      <Folder Include="Features\Students\Mappers\" />
-      <Folder Include="Features\Students\Queries\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Behaviours\" />
+      <Folder Include="Features\" />
     </ItemGroup>
 
 </Project>

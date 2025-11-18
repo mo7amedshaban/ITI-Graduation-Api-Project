@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core.Common;
+using Core.Entities.Courses;
+using Core.Entities.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace Core.Entities;
 
 [Index("UserId", Name = "IX_Instructors_UserId", IsUnique = true)]
-public partial class Instructor
+public partial class Instructor : AuditableEntity
 {
     [Key]
     public Guid Id { get; set; }
@@ -16,18 +17,11 @@ public partial class Instructor
 
     public string Title { get; set; } = null!;
 
-    public DateTimeOffset? CreatedAtUtc { get; set; }
-
-    public string? CreatedBy { get; set; }
-
-    public DateTimeOffset? LastModifiedUtc { get; set; }
-
-    public string? LastModifiedBy { get; set; }
 
     [InverseProperty("Instructor")]
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    [ForeignKey("UserId")]
-    [InverseProperty("Instructor")]
-    public virtual AspNetUser User { get; set; } = null!;
+    [ForeignKey("UserId")]  
+    public virtual ApplicationUser User { get; set; } = null!;
+
 }

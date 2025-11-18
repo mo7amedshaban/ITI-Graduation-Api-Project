@@ -1,35 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Entities;
+﻿using Core.Entities;
+using Core.Entities.Courses;
+using Core.Entities.Exams;
+using Core.Entities.Identity;
+using Core.Entities.Students;
+using Core.Entities.Zoom;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace Infrastructure.Data;
 
-public partial class AppDBContext : DbContext
+public partial class AppDBContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
+
+    public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
+    {
+
+    }
     public AppDBContext()
     {
     }
 
-    public AppDBContext(DbContextOptions<AppDBContext> options)
-        : base(options)
-    {
-    }
+  
 
     public virtual DbSet<AnswerOption> AnswerOptions { get; set; }
-
-    public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-
-    public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
-
-    public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-
-    public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-
-    public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-
-    public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
-
     public virtual DbSet<Course> Courses { get; set; }
 
     public virtual DbSet<Enrollment> Enrollments { get; set; }
@@ -66,36 +62,7 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<AspNetRole>(entity =>
-        {
-            entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
-                .IsUnique()
-                .HasFilter("([NormalizedName] IS NOT NULL)");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-        });
-
-        modelBuilder.Entity<AspNetUser>(entity =>
-        {
-            entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
-                .IsUnique()
-                .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AspNetUserRole",
-                    r => r.HasOne<AspNetRole>().WithMany().HasForeignKey("RoleId"),
-                    l => l.HasOne<AspNetUser>().WithMany().HasForeignKey("UserId"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "RoleId");
-                        j.ToTable("AspNetUserRoles");
-                        j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
-                    });
-        });
-
+      
         modelBuilder.Entity<Course>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
