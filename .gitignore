@@ -1,0 +1,100 @@
+# .gitignore for .NET projects + Rider/VS + macOS
+
+# Visual Studio / Rider
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.DotSettings.user
+*.sln.iml
+*.sln.ide
+
+# Rider caches / local history
+.idea/
+.idea/*
+.idea/.idea.*
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bin/
+obj/
+out/
+
+# Publish output
+publish/
+
+# IIS
+IISExpress/
+
+# NuGet
+*.nupkg
+/packages/
+
+# Dotnet core
+project.lock.json
+project.fragment.lock.json
+*.dotCover
+
+# Entity Framework Migrations (if you prefer to ignore migrations; remove if you want them versioned)
+**/Migrations/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userprefs
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Windows
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Secrets / local configuration
+secrets.json
+appsettings.Development.json
+appsettings.*.Local.json
+appsettings.Local.json
+.env
+.env.*
+
+# Docker
+docker-compose.override.yml
+
+# Test results
+TestResults/
+*.trx
+
+# EF Core local DB
+*.mdf
+*.ldf
+
+# Node
+node_modules/
+
+# Generated files
+*.generated.cs
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# JetBrains / misc
+*.DotSettings.user
+*.iml
+
+# End
