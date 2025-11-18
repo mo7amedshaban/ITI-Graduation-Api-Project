@@ -12,6 +12,10 @@
       <Folder Include="Features\Courses\DTOs\" />
       <Folder Include="Features\Courses\Mappers\" />
       <Folder Include="Features\Courses\Queries\" />
+      <Folder Include="Features\Students\Commands\" />
+      <Folder Include="Features\Students\DTOs\" />
+      <Folder Include="Features\Students\Mappers\" />
+      <Folder Include="Features\Students\Queries\" />
     </ItemGroup>
 
     <ItemGroup>
