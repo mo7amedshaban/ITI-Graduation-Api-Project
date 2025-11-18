@@ -8,39 +8,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.Exams;
 
-[Index("ExamId", Name = "IX_ExamResults_ExamId")]
-[Index("StudentId", Name = "IX_ExamResults_StudentId")]
+
 public partial class ExamResult : AuditableEntity
 {
-    [Key]
-    public Guid Id { get; set; }
+    #region Prop
 
-    public Guid StudentId { get; set; }
+    public Guid StudentId { get; private set; }
+    public Guid ExamId { get; private set; }
 
-    public Guid ExamId { get; set; }
+    public int TotalQuestions { get; private set; }
+    public int CorrectAnswers { get; private set; }
+    public int WrongAnswers { get; private set; }
+    public double Score { get; private set; }
+    public DateTimeOffset? StartedAt { get; private set; }
+    public string Status { get; private set; } = "Submitted";
 
-    public int TotalQuestions { get; set; }
+    #region Additional Properties
+    public DateTimeOffset? SubmittedAt { get; private set; }
+    public TimeSpan? Duration => SubmittedAt - StartedAt;
+    #endregion
 
-    public int CorrectAnswers { get; set; }
+    // Navigation Properties
+    public Student Student { get; private set; } = default!;
 
-    public int WrongAnswers { get; set; }
+    public Exam Exam { get; private set; } = default!;
+    public ICollection<StudentAnswer> StudentAnswers { get; private set; } = new List<StudentAnswer>();
 
-    public double Score { get; set; }
 
-    public DateTimeOffset? StartedAt { get; set; }
-
-    public string Status { get; set; } = null!;
-
-    public DateTimeOffset? SubmittedAt { get; set; }
-
-    [ForeignKey("ExamId")]
-    [InverseProperty("ExamResults")]
-    public virtual Exam Exam { get; set; } = null!;
-
-    [ForeignKey("StudentId")]
-    [InverseProperty("ExamResults")]
-    public virtual Student Student { get; set; } = null!;
-
-    [InverseProperty("ExamResult")]
-    public virtual ICollection<StudentAnswer> StudentAnswers { get; set; } = new List<StudentAnswer>();
+    #endregion
 }

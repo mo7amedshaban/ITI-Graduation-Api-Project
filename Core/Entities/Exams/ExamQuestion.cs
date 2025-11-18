@@ -7,23 +7,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities.Exams;
 
-[PrimaryKey("ExamId", "QuestionId")]
-[Index("QuestionId", Name = "IX_ExamQuestions_QuestionId")]
-public partial class ExamQuestion : AuditableEntity
+public class ExamQuestions
 {
-    [Key]
-    public Guid ExamId { get; set; }
 
-    [Key]
+    public Guid ExamId { get; set; }
     public Guid QuestionId { get; set; }
 
     public int QuestionOrder { get; set; }
 
-    [ForeignKey("ExamId")]
-    [InverseProperty("ExamQuestions")]
-    public virtual Exam Exam { get; set; } = null!;
 
-    [ForeignKey("QuestionId")]
-    [InverseProperty("ExamQuestions")]
-    public virtual Question Question { get; set; } = null!;
+
+    // Navigation properties
+    public Exam Exam { get; set; } = default!;
+    public Question Question { get; set; } = default!;
 }

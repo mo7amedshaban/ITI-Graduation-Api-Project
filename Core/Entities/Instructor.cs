@@ -7,21 +7,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
 
-[Index("UserId", Name = "IX_Instructors_UserId", IsUnique = true)]
+
 public partial class Instructor : AuditableEntity
 {
-    [Key]
-    public Guid Id { get; set; }
+    [ForeignKey("User")]
+    public Guid UserId { get; private set; }
+    public string Title { get; set; }
+    public ApplicationUser User { get; private set; } = default!;
+    public ICollection<Course> Courses { get; private set; } = new List<Course>();
 
-    public Guid UserId { get; set; }
 
-    public string Title { get; set; } = null!;
-
-
-    [InverseProperty("Instructor")]
-    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
-
-    [ForeignKey("UserId")]  
-    public virtual ApplicationUser User { get; set; } = null!;
 
 }

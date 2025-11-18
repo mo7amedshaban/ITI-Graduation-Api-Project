@@ -1,4 +1,5 @@
 ﻿using Core.Common;
+using Core.Entities.Zoom;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,30 +12,32 @@ namespace Core.Entities.Courses;
 [Index("ModuleId", Name = "IX_Lectures_ModuleId")]
 public partial class Lecture : AuditableEntity
 {
-    [Key]
-    public Guid Id { get; set; }
+    #region Properties & Navigation
 
-    public string Title { get; set; } = null!;
+    public string Title { get; private set; } = default!;
+    public string? RecordingUrl { get; private set; }
+    public bool? IsRecordedAvailable { get; set; }
+    public DateTimeOffset ScheduledAt { get; private set; }
+    public TimeSpan Duration { get; private set; }
+    public bool IsCompleted { get; private set; } = false;
 
-    public string? ContentUrl { get; set; }
+    // Foreign Key
+    public Guid CourseId { get; private set; }
+    public Course Course { get; private set; } = default!;
 
-    public Guid CourseId { get; set; }
+    public Guid ZoomMeetingId { get; set; }
+    public ZoomMeeting ZoomMeeting { get; set; }
 
-    public DateTimeOffset ScheduledAt { get; set; }
 
-    public TimeOnly Duration { get; set; }
+    public Guid ModuleId { get; set; }
 
-    public bool IsCompleted { get; set; }
+    public Module Modules { get; set; }
 
-    public Guid? ModuleId { get; set; }
 
-  
+    public Guid? ZoomRecoredId { get; set; }
+    public ZoomRecording? ZoomRecording { get; set; }
 
-    [ForeignKey("CourseId")]
-    [InverseProperty("Lectures")]
-    public virtual Course Course { get; set; } = null!;
 
-    [ForeignKey("ModuleId")]
-    [InverseProperty("Lectures")]
-    public virtual Module? Module { get; set; }
+
+    #endregion
 }

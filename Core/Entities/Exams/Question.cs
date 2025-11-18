@@ -10,22 +10,24 @@ namespace Core.Entities.Exams;
 
 public partial class Question : AuditableEntity
 {
-    [Key]
-    public Guid Id { get; set; }
+    #region Properties
+    public string Text { get; private set; } = default!;
+    public string? ImageUrl { get; private set; } = default!;
+    public decimal? Points { get; private set; }
 
-    public string Text { get; set; } = null!;
 
-    public string? ImageUrl { get; set; }
+    #endregion
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal? Points { get; set; }
+    #region MTOM
 
-    [InverseProperty("Question")]
-    public virtual ICollection<AnswerOption> AnswerOptions { get; set; } = new List<AnswerOption>();
 
-    [InverseProperty("Question")]
-    public virtual ICollection<ExamQuestion> ExamQuestions { get; set; } = new List<ExamQuestion>();
+    private readonly List<ExamQuestions> _examQuestions = new();
+    public IReadOnlyList<ExamQuestions> ExamQuestions => _examQuestions.AsReadOnly();
+    #endregion
 
-    [InverseProperty("Question")]
-    public virtual ICollection<StudentAnswer> StudentAnswers { get; set; } = new List<StudentAnswer>();
+    #region Navigation
+    private readonly List<AnswerOption> _answerOptions = new();
+    public IReadOnlyCollection<AnswerOption> AnswerOptions => _answerOptions.AsReadOnly();
+    #endregion
+
 }

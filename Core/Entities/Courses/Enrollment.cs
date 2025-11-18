@@ -5,35 +5,35 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Core.Entities.Courses;
 
-[Index("CourseId", Name = "IX_Enrollments_CourseId")]
-[Index("StudentId", Name = "IX_Enrollments_StudentId")]
 public partial class Enrollment : AuditableEntity
 {
-    [Key]
-    public Guid Id { get; set; }
+    public const string StatusActive = "Active";
+    public const string StatusPending = "Pending";
 
-    public Guid StudentId { get; set; }
+    [ForeignKey("Student")]
+    public Guid StudentId { get; private set; }
 
-    public Guid CourseId { get; set; }
 
-    public DateTimeOffset EnrollmentDate { get; set; }
+    [ForeignKey("Course")]
+    public Guid CourseId { get; private set; }
 
-    public string Status { get; set; } = null!;
 
-    public DateTimeOffset? StatusChangedAt { get; set; }
 
-    public string? StatusReason { get; set; }
+    public DateTimeOffset EnrollmentDate { get; private set; }
+    public string Status { get; private set; } = "Pending";
 
-  
+    public DateTimeOffset? StatusChangedAt { get; private set; }
+    public string? StatusReason { get; private set; }
 
-    [ForeignKey("CourseId")]
-    [InverseProperty("Enrollments")]
-    public virtual Course Course { get; set; } = null!;
+    // Navigation properties
+    [JsonIgnore]
+    public Student Student { get; private set; } = default!;
+    [JsonIgnore]
+    public Course Course { get; private set; } = default!;
 
-    [ForeignKey("StudentId")]
-    [InverseProperty("Enrollments")]
-    public virtual Student Student { get; set; } = null!;
+
 }
