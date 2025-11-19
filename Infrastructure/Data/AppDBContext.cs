@@ -7,23 +7,19 @@ using Core.Entities.Zoom;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 namespace Infrastructure.Data;
 
 public partial class AppDBContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
-
     public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
     {
-
     }
+
     public AppDBContext()
     {
     }
 
-  
 
     public virtual DbSet<AnswerOption> AnswerOptions { get; set; }
     public virtual DbSet<Course> Courses { get; set; }
@@ -53,22 +49,23 @@ public partial class AppDBContext : IdentityDbContext<ApplicationUser, IdentityR
     public virtual DbSet<ZoomMeeting> ZoomMeetings { get; set; }
 
     public virtual DbSet<ZoomRecording> ZoomRecordings { get; set; }
-    
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Important: let IdentityDbContext configure its own entities (roles, user logins, etc.)
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Lecture>()
-         .HasOne(l => l.ZoomMeeting)
-         .WithOne(z => z.Lecture)
-         .HasForeignKey<ZoomMeeting>(z => z.Id);
 
         modelBuilder.Entity<Lecture>()
-        .HasOne(l => l.ZoomRecording)
-        .WithOne(z => z.Lecture)
-        .HasForeignKey<ZoomRecording>(z => z.Id);
+            .HasOne(l => l.ZoomMeeting)
+            .WithOne(z => z.Lecture)
+            .HasForeignKey<ZoomMeeting>(z => z.Id);
+
+        modelBuilder.Entity<Lecture>()
+            .HasOne(l => l.ZoomRecording)
+            .WithOne(z => z.Lecture)
+            .HasForeignKey<ZoomRecording>(z => z.Id);
 
         // Configure ExamQuestions as a join entity with composite key
         modelBuilder.Entity<ExamQuestions>(entity =>
@@ -76,14 +73,14 @@ public partial class AppDBContext : IdentityDbContext<ApplicationUser, IdentityR
             entity.HasKey(eq => new { eq.ExamId, eq.QuestionId });
 
             entity.HasOne(eq => eq.Exam)
-                  .WithMany(e => e.ExamQuestions)
-                  .HasForeignKey(eq => eq.ExamId)
-                  .OnDelete(DeleteBehavior.Cascade);
+                .WithMany(e => e.ExamQuestions)
+                .HasForeignKey(eq => eq.ExamId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(eq => eq.Question)
-                  .WithMany(q => q.ExamQuestions)
-                  .HasForeignKey(eq => eq.QuestionId)
-                  .OnDelete(DeleteBehavior.Cascade);
+                .WithMany(q => q.ExamQuestions)
+                .HasForeignKey(eq => eq.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Optional: configure property length/order, etc.
         });

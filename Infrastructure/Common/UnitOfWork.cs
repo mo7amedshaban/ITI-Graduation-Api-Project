@@ -1,9 +1,11 @@
-using Infrastructure.Data;
+using Core.Entities.Courses;
 using Core.Interfaces;
+using Infrastructure.Common.GenRepo;
+using Infrastructure.Data;
 
 namespace Infrastructure.Common;
 
-public class UnitOfWork: IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDBContext _context;
 
@@ -12,8 +14,13 @@ public class UnitOfWork: IUnitOfWork
         _context = context;
     }
 
-    //public IAuthorRepository Authors => new AuthorRepository(_context);
+    public IGenericRepository<Course> Courses => new GenericRepository<Course>(_context);
     //public IBookRepository Books => new BookRepository(_context);
+
+    public async Task<int> CompleteAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+    }
 
     public int Complete()
     {
