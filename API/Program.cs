@@ -1,10 +1,15 @@
 using API.Handlers;
-using Application;
-using Infrastructure;
+using Application.Features.Courses.Commands.CreateCourse;
+using Application.Features.Courses.Mappers;
+using Core.Interfaces;
+using Infrastructure.Common;
+using Infrastructure.Common.GenRepo;
 using Infrastructure.Data;
-using Infrastructure.Extension;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Application;
+using Infrastructure;
+using Infrastructure.Extension;
 using System.Reflection;
 
 
@@ -17,14 +22,29 @@ builder.Services.AddInfrastructureDependencies().AddServiceDependencies()
 
 builder.Services.AddDbContext<AppDBContext>(options =>
 {
+    options.UseSqlServer(connectionString, b => b.MigrationsAssembly(typeof(AppDBContext).Assembly.FullName));
     options.UseSqlServer(connectionString, b =>
         b.MigrationsAssembly(typeof(AppDBContext).Assembly.FullName));
 });
 
 
+
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblyContaining<CreateCourseCommand>());
+
+builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(CourseProfile).Assembly));
+
 #region Swagger Config
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -87,6 +107,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var app = builder.Build();
 
 
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -109,7 +130,35 @@ app.UseSwaggerUI(c =>
 
 #endregion
 
-app.UseExceptionHandler();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await services.SeedRolesAsync();
+}
+#region Swagger Middleware
+app.UseSwagger();
+
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "RepositoryPattern UnitOfWork API v1"); });
+// app.UseExceptionHandler();
+app.UseSwaggerUI();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API V1");
+    c.RoutePrefix = "swagger"; // This makes it available at /swagger
+
+    // For production, you might want to hide the Swagger UI
+    // but keep the JSON available for API consumers
+    if (!app.Environment.IsDevelopment())
+    {
+        c.DocumentTitle = "API Documentation - Production";
+    }
+});
+
+#endregion
+
+// app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
@@ -119,4 +168,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

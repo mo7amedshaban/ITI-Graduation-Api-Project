@@ -52,6 +52,9 @@ public class UnitOfWork : IUnitOfWork , IAsyncDisposable
         ZoomRecordes = new GenericRepository<ZoomRecording>(context);
     }
 
+
+
+
     public async Task<int> CommitAsync(CancellationToken ct)
     {
         try
@@ -89,6 +92,12 @@ public class UnitOfWork : IUnitOfWork , IAsyncDisposable
             _transaction = null;
         }
     }
+
+    public async Task<int> CompleteAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+    }
+
 
     public int Complete()
     {

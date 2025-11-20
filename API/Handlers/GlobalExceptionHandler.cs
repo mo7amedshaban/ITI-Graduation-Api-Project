@@ -28,7 +28,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
                     Status = StatusCodes.Status400BadRequest,
                     Type = "https://tools.ietf.org/html/rfc7807",
                     Title = "Validation Exception Error",
-                    Detail = validationEx.Message,
+                    Detail = validationEx.Message
                 };
                 break;
 
