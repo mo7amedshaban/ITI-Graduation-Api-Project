@@ -100,7 +100,7 @@ public class TokenService : ITokenService
 
     }
 
-    public Task<AuthResult> GenerateRefreshTokenAsync(string token, string refreshToken)
+    public Task<AuthResult> GenerateRefreshTokenAsync()
     {
         try
         {
