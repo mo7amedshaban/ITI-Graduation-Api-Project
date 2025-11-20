@@ -8,10 +8,11 @@ namespace Infrastructure.Common.GenRepo;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly AppDBContext _context;
-
+    protected readonly DbSet<T> _dbSet;
     public GenericRepository(AppDBContext context)
     {
         _context = context;
+        _dbSet = _context.Set<T>();
     }
 
     public IEnumerable<T> GetAll()

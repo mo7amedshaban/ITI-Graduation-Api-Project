@@ -8,7 +8,7 @@ namespace Infrastructure.Interfaces
     {
         Task<AuthResult> GenerateTokenAsync(ApplicationUser user);
 
-        Task<AuthResult> GenerateRefreshTokenAsync(string token, string refreshToken);
+        Task<AuthResult> GenerateRefreshTokenAsync();
 
         Task<bool> RevokeTokenAsync(string refreshToken);
 

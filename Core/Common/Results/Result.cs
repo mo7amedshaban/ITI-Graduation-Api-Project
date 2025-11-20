@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Common.Results
 {
-    public static class Results
+    public static class Result
     {
         public static Success Success { get; set; }
         public static Created Created { get; set; }

@@ -25,4 +25,12 @@ public partial class Student : AuditableEntity
     public ICollection<Enrollment> Enrollments { get; private set; } = new List<Enrollment>();
     public ICollection<ExamResult> ExamResults { get; private set; } = new List<ExamResult>();
 
+
+    // 
+     
+    public Student(Guid userId)
+    {
+        UserId = userId;
+    }
+
 }
