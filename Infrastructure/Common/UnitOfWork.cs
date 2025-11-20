@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-using Core.Entities.Courses;
-using Core.Interfaces;
-using Infrastructure.Common.GenRepo;
-using Infrastructure.Data;
-
-namespace Infrastructure.Common;
-
-public class UnitOfWork : IUnitOfWork
-=======
 using Core.Entities;
 using Core.Entities.Courses;
 using Core.Entities.Exams;
@@ -24,7 +14,6 @@ using Microsoft.Extensions.Logging;
 namespace Infrastructure.Common;
 
 public class UnitOfWork : IUnitOfWork , IAsyncDisposable
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)
 {
     private readonly AppDBContext _context;
     private readonly ILogger<UnitOfWork> _logger;
@@ -63,10 +52,9 @@ public class UnitOfWork : IUnitOfWork , IAsyncDisposable
         ZoomRecordes = new GenericRepository<ZoomRecording>(context);
     }
 
-<<<<<<< HEAD
+    public IGenericRepository<Instructor> Instructors => new GenericRepository<Instructor>(_context);
     public IGenericRepository<Course> Courses => new GenericRepository<Course>(_context);
-    //public IBookRepository Books => new BookRepository(_context);
-=======
+
     public async Task<int> CommitAsync(CancellationToken ct)
     {
         try
@@ -104,7 +92,6 @@ public class UnitOfWork : IUnitOfWork , IAsyncDisposable
             _transaction = null;
         }
     }
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)
 
     public async Task<int> CompleteAsync(CancellationToken cancellationToken = default)
     {

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-using Core.Entities.Courses;
-
-namespace Core.Interfaces;
-
-public interface IUnitOfWork : IDisposable
-{
-    IGenericRepository<Course> Courses { get; } //property for Book repository
-    int Complete();
-    Task<int> CompleteAsync(CancellationToken cancellationToken = default);
-}
-=======
 using Core.Entities;
 using Core.Entities.Courses;
 using Core.Entities.Exams;
@@ -22,8 +10,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Interfaces;
 
-public interface IUnitOfWork : IAsyncDisposable
+public interface IUnitOfWork : IAsyncDisposable,IDisposable
 {
+    IGenericRepository<Course> Courses { get; } //property for Book repository
+    IGenericRepository<Instructor> Instructors { get; }
+    int Complete();
+    Task<int> CompleteAsync(CancellationToken cancellationToken = default);
     IGenericRepository<ApplicationUser> ApplicationUsers { get; }
     IGenericRepository<Student> Students { get; }
     IGenericRepository<StudentAnswer> StudentAnswers { get; }
@@ -64,4 +56,3 @@ public interface IUnitOfWork : IAsyncDisposable
     Task RollbackTransactionAsync();
 }
 
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)

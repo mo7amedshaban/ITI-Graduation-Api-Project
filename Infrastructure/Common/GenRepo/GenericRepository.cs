@@ -164,6 +164,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return entity;
     }
 
+
     public void Delete(T entity)
     {
         _context.Set<T>().Remove(entity);
