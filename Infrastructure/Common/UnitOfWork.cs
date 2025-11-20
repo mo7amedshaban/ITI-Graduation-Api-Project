@@ -7,31 +7,16 @@ using Core.Entities.Zoom;
 using Core.Interfaces;
 using Infrastructure.Common.GenRepo;
 using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Common;
 
-public class UnitOfWork : IUnitOfWork , IAsyncDisposable
+public class UnitOfWork : IUnitOfWork, IAsyncDisposable
 {
     private readonly AppDBContext _context;
     private readonly ILogger<UnitOfWork> _logger;
     private IDbContextTransaction? _transaction;
-
-    public IGenericRepository<ApplicationUser> ApplicationUsers { get; }
-    public IGenericRepository<Student> Students { get; }
-    public IGenericRepository<StudentAnswer> StudentAnswers { get; }
-    public IGenericRepository<Course> Courses { get; }
-    public IGenericRepository<Exam> Exams { get; }
-    public IGenericRepository<Question> Questions { get; }
-    public IGenericRepository<AnswerOption> AnswerOptions { get; }
-    public IGenericRepository<Lecture> Lectures { get; }
-    public IGenericRepository<Instructor> Instructors { get; }
-    public IGenericRepository<Enrollment> Enrollments { get; }
-    public IGenericRepository<ExamResult> ExamResults { get; }
-    public IGenericRepository<ZoomRecording> ZoomRecordes { get; }
-    public IGenericRepository<ZoomMeeting> ZoomMeetings { get; }
 
     public UnitOfWork(AppDBContext context, ILogger<UnitOfWork> logger)
     {
@@ -52,8 +37,22 @@ public class UnitOfWork : IUnitOfWork , IAsyncDisposable
         ZoomRecordes = new GenericRepository<ZoomRecording>(context);
     }
 
-    public IGenericRepository<Instructor> Instructors => new GenericRepository<Instructor>(_context);
-    public IGenericRepository<Course> Courses => new GenericRepository<Course>(_context);
+    public IGenericRepository<ApplicationUser> ApplicationUsers { get; }
+    public IGenericRepository<Student> Students { get; }
+    public IGenericRepository<StudentAnswer> StudentAnswers { get; }
+    public IGenericRepository<Course> Courses { get; }
+    public IGenericRepository<Exam> Exams { get; }
+    public IGenericRepository<Question> Questions { get; }
+    public IGenericRepository<AnswerOption> AnswerOptions { get; }
+    public IGenericRepository<Lecture> Lectures { get; }
+    public IGenericRepository<Instructor> Instructors { get; }
+    public IGenericRepository<Enrollment> Enrollments { get; }
+    public IGenericRepository<ExamResult> ExamResults { get; }
+    public IGenericRepository<ZoomRecording> ZoomRecordes { get; }
+    public IGenericRepository<ZoomMeeting> ZoomMeetings { get; }
+
+    // public IGenericRepository<Instructor> Instructors => new GenericRepository<Instructor>(_context);
+    // public IGenericRepository<Course> Courses => new GenericRepository<Course>(_context);
 
     public async Task<int> CommitAsync(CancellationToken ct)
     {

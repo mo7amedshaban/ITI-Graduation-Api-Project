@@ -34,15 +34,10 @@
     </ItemGroup>
 
     <ItemGroup>
-<<<<<<< HEAD
+
         <ProjectReference Include="..\Application\Application.csproj"/>
         <ProjectReference Include="..\Core\Core.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
-=======
-      <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\Core\Core.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)
     </ItemGroup>
 
 </Project>

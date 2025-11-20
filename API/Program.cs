@@ -1,24 +1,17 @@
+using System.Reflection;
 using API.Handlers;
-<<<<<<< HEAD
+using Application;
 using Application.Features.Courses.Commands.CreateCourse;
 using Application.Features.Courses.Mappers;
 using Core.Interfaces;
+using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Common.GenRepo;
 using Infrastructure.Data;
+using Infrastructure.Extension;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-=======
-using Application;
-using Infrastructure;
-using Infrastructure.Data;
-using Infrastructure.Extension;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
-
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +28,6 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 });
 
 
-<<<<<<< HEAD
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 // builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
@@ -46,11 +38,9 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(CourseProfile).Assembly));
 
 // Replace AddOpenApi() with AddSwaggerGen and an OpenAPI document
-=======
 #region Swagger Config
 
 builder.Services.AddEndpointsApiExplorer();
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -120,11 +110,11 @@ using (var scope = app.Services.CreateScope())
 }
 #region Swagger Middleware
 app.UseSwagger();
-<<<<<<< HEAD
-app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "RepositoryPattern UnitOfWork API v1"); });
-// app.UseExceptionHandler();
-app.UseSwaggerUI();
-=======
+// <<<<<<< HEAD
+// app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "RepositoryPattern UnitOfWork API v1"); });
+// // app.UseExceptionHandler();
+// app.UseSwaggerUI();
+// =======
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API V1");
@@ -139,7 +129,6 @@ app.UseSwaggerUI(c =>
 });
 
 #endregion
->>>>>>> 655d5c1 (Handle UoW , Create Studednt Repo, Handle Register Configration , Handle Student Registration and Update Token Service)
 
 // app.UseExceptionHandler();
 
