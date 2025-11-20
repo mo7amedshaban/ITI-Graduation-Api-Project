@@ -48,7 +48,7 @@ public class CourseController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("Delete/{id:guid}", Name = "DeleteCourse")]
+    [HttpDelete("Delete/{id:guid}", Name = "DeleteCourse")]
     public async Task<IActionResult> DeleteCourse(Guid id)
     {
         var command = new RemoveCourseCommand(id);

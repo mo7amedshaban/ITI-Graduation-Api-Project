@@ -1,3 +1,4 @@
+using Core.Entities;
 using Core.Entities.Courses;
 using Core.Interfaces;
 using Infrastructure.Common.GenRepo;
@@ -14,8 +15,9 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
+    public IGenericRepository<Instructor> Instructors => new GenericRepository<Instructor>(_context);
     public IGenericRepository<Course> Courses => new GenericRepository<Course>(_context);
-    //public IBookRepository Books => new BookRepository(_context);
+
 
     public async Task<int> CompleteAsync(CancellationToken cancellationToken = default)
     {
