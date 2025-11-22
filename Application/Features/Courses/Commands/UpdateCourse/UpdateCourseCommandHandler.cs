@@ -25,7 +25,7 @@ public class UpdateCourseCommandHandler : IRequestHandler<UpdateCourseCommand, C
         _mapper.Map(request.Dto, Course);
 
         var trackedCourse = _unitOfWork.Courses.Update(Course);
-        await _unitOfWork.CompleteAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         return _mapper.Map<CourseDto.UpdateCourseDto>(trackedCourse);
     }
 }

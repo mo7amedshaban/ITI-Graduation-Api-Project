@@ -22,7 +22,7 @@ public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, C
     {
         var course = _mapper.Map<Course>(request.Dto);
         await _unitOfWork.Courses.AddAsync(course);
-        await _unitOfWork.CompleteAsync(cancellationToken);
-        return _mapper.Map<CourseDto>(course); //---------
+        await _unitOfWork.CommitAsync(cancellationToken);
+        return _mapper.Map<CourseDto>(course); 
     }
 }

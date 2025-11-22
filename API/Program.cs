@@ -30,11 +30,11 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-// builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<CreateCourseCommand>());
-// builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(Program).Assembly));
+
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(CourseProfile).Assembly));
 
 // Replace AddOpenApi() with AddSwaggerGen and an OpenAPI document
@@ -101,6 +101,30 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await services.SeedRolesAsync();
+}
+#region Swagger Middleware
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API V1");
+    c.RoutePrefix = "swagger"; // This makes it available at /swagger
+
+    // For production, you might want to hide the Swagger UI
+    // but keep the JSON available for API consumers
+    if (!app.Environment.IsDevelopment())
+    {
+        c.DocumentTitle = "API Documentation - Production";
+    }
+});
+
+#endregion
 
 
 using (var scope = app.Services.CreateScope())

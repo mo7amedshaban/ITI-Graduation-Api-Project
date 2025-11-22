@@ -26,7 +26,7 @@ public class UpdateInstructorCommandHandler : IRequestHandler<UpdateInstructorCo
 
         _mapper.Map(request.InstructorDto, instructor);
         _unitOfWork.Instructors.Update(instructor);
-        await _unitOfWork.CompleteAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         return _mapper.Map<InstructorDto>(instructor);
     }
 }

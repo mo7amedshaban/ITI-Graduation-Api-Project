@@ -21,7 +21,7 @@ public class RemoveCourseCommandHandler : IRequestHandler<RemoveCourseCommand, b
         if (course == null)
             throw new KeyNotFoundException($"Course with Id {request.Id} not found.");
         _unitOfWork.Courses.Delete(course);
-        await _unitOfWork.CompleteAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         return true;
     }
 }

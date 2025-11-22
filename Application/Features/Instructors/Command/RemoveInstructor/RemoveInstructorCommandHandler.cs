@@ -19,7 +19,7 @@ public class RemoveInstructorCommandHandler : IRequestHandler<RemoveInstructorCo
         if (instructor == null)
             throw new BusinessException($"Instructor with Id {request.InstructorId} not found.");
         _unitOfWork.Instructors.Delete(instructor);
-        await _unitOfWork.CompleteAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         return true;
     }
 }

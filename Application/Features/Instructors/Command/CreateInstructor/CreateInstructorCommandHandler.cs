@@ -23,7 +23,7 @@ public class CreateInstructorCommandHandler : IRequestHandler<CreateInstructorCo
             throw new ArgumentNullException(nameof(request.Dto), "Instructor data must be provided.");
         var instructor = _mapper.Map<Instructor>(request.Dto);
         await _unitOfWork.Instructors.AddAsync(instructor);
-        await _unitOfWork.CompleteAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return _mapper.Map<CreateInstructorDto>(instructor);
     }
