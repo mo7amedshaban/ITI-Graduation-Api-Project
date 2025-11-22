@@ -8,5 +8,6 @@ namespace Application.Features.Authantication.Command.Models
 {
     internal class RefreshTokenCommand
     {
+
     }
 }

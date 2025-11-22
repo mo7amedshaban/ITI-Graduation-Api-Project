@@ -37,6 +37,7 @@ public partial class RefreshToken : AuditableEntity
 
     #region  Behaviors
 
+   
     
 
     #endregion

@@ -16,6 +16,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
+
         [HttpPost("register-student")]
         public async Task<IActionResult> RegisterStudent([FromBody] RegisterRequest request)
         {
@@ -23,10 +24,22 @@ namespace API.Controllers
             var result = await _mediator.Send(command);
 
             return result.Match<IActionResult>(
-                authResult => Ok(authResult),                
-                errors => BadRequest(errors.Select(e => e.Description)) 
+                authResult => Ok(authResult),
+                errors => BadRequest(errors.Select(e => e.Description ?? "Unknown error").ToList())
             );
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var command = new LoginCommand(request);
+            var result = await _mediator.Send(command);
+            return result.Match<IActionResult>(
+                authResult => Ok(authResult),
+                errors => BadRequest(errors.Select(e => e.Description ?? "Unknown error").ToList())
+            );
+        }
+
 
     }
 }
