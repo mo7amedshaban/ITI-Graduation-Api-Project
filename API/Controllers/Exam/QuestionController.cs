@@ -2,6 +2,7 @@ using Application.Features.Exam.Commands.Questions.CreateQuestion;
 using Application.Features.Exam.Commands.Questions.RemoveQuestion;
 using Application.Features.Exam.Commands.Questions.UpdateQuestion;
 using Application.Features.Exam.DTOs;
+using Application.Features.Exam.Queries;
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 using Core.Interfaces;
@@ -97,6 +98,6 @@ public class QuestionController : ControllerBase
     [TranslateResultToActionResult]
     public async Task<Result<List<QuestionDto>>> GetAllQuestions()
     {
-        return await _sender.Send(new Application.Features.Exam.Queries.GetAllQuestionQuery());
+        return await _sender.Send(new GetAllQuestionQuery());
     }
 }
