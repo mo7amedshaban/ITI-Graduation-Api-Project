@@ -6,7 +6,7 @@ public class CreateQuestionCommandHandlerValidator : AbstractValidator<CreateQue
 {
     public CreateQuestionCommandHandlerValidator()
     {
-        RuleFor(x => x.questionDto.Text).NotEmpty().WithMessage("Title is required.");
-        RuleFor(x => x.questionDto.Points).NotEmpty().WithMessage("Point is required.");
+        RuleFor(x => x.dto.Text).NotEmpty().WithMessage("Title is required.");
+        RuleFor(x => x.dto.Points).NotEmpty().WithMessage("Point is required.");
     }
 }

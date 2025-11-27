@@ -33,7 +33,7 @@ public class UpdateQuestionCommandHandler
             return Result.NotFound("Question not found");
 
         // 2) Handle image update
-        if (request.Image != null)
+        if (dto.Image != null)
         {
             // delete old file
             if (!string.IsNullOrEmpty(question.ImageUrl))
@@ -41,8 +41,8 @@ public class UpdateQuestionCommandHandler
 
             // upload new file
             var newImageUrl = await _fileStorage.UploadFileAsync(
-                request.Image.FileName,
-                request.Image.OpenReadStream(),
+                dto.Image.FileName,
+                dto.Image.OpenReadStream(),
                 "Questions"
             );
 

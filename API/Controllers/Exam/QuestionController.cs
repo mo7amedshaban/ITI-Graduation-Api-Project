@@ -22,29 +22,24 @@ public class QuestionController : ControllerBase
     private readonly ISender _sender;
     private readonly IUnitOfWork _unitOfWork;
 
-    public QuestionController(ILogger<QuestionController> logger, ISender sender, IWebHostEnvironment env,
-        IFileStorageService fileStorageService, IUnitOfWork unitOfWork)
+    public QuestionController(ILogger<QuestionController> logger, ISender sender, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _sender = sender;
-        _fileStorageService = fileStorageService;
-        _env = env;
         _unitOfWork = unitOfWork;
     }
 
+
     [HttpPost("CreateQuestion")]
     [TranslateResultToActionResult]
-    public async Task<Result<QuestionDto>> CreateQuestion([FromForm] CreateQuestionCommand command,
-        IFormFile? image)
+    public async Task<Result<QuestionDto>> CreateQuestion([FromForm] CreateQuestionRequestDto request)
     {
-        if (command == null)
-            return Result.NotFound("Command cannot be null");
-        if (image != null)
-            command.questionDto.ImageUrl =
-                await _fileStorageService.UploadFileAsync(image.FileName, image.OpenReadStream(), "Questions");
-        _logger.LogInformation("Uploaded image saved: {ImageUrl}", command.questionDto.ImageUrl);
-        return await _sender.Send(command);
+        if (request == null)
+            return Result.NotFound("Question Data cannot be null");
+
+        return await _sender.Send(new CreateQuestionCommand(request));
     }
+
 
     [HttpDelete("RemoveQuestion/{questionId}")]
     [TranslateResultToActionResult]
@@ -55,12 +50,12 @@ public class QuestionController : ControllerBase
 
     [HttpPut("UpdateQuestion")]
     [TranslateResultToActionResult]
-    public async Task<Result<QuestionDto>> UpdateQuestion([FromForm] QuestionDto dto, IFormFile? image)
+    public async Task<Result<QuestionDto>> UpdateQuestion([FromForm] UpdateQuestionRequestDto? dto)
     {
         if (dto == null)
             return Result.NotFound("Question Data cannot be null");
 
-        return await _sender.Send(new UpdateQuestionCommand(dto, image));
+        return await _sender.Send(new UpdateQuestionCommand(dto));
     }
 
 

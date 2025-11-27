@@ -33,6 +33,10 @@
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="wwwroot\Questions\"/>
+    </ItemGroup>
+
     <!--    <ItemGroup>-->
     <!--        <Folder Include="Controllers\Exam\"/>-->
     <!--        <Folder Include="wwwroot\Questions\"/>-->

@@ -9,6 +9,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly AppDBContext _context;
     protected readonly DbSet<T> _dbSet;
+
     public GenericRepository(AppDBContext context)
     {
         _context = context;
@@ -96,7 +97,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return query.ToList();
     }
 
-    public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> criteria, string[] includes = null)
+    public async Task<List<T>> FindAllAsync(Expression<Func<T, bool>> criteria, string[] includes = null)
     {
         IQueryable<T> query = _context.Set<T>();
 
@@ -106,6 +107,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
         return await query.Where(criteria).ToListAsync();
     }
+
 
     public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> criteria, int take, int skip)
     {

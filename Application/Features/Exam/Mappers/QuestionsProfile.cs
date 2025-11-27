@@ -8,9 +8,11 @@ public class QuestionsProfile : Profile
 {
     public QuestionsProfile()
     {
-        // Create mappings here if needed in the future
+        CreateMap<CreateQuestionRequestDto, Question>();
+        CreateMap<AnswerOptionDto, AnswerOption>();
 
-
-        CreateMap<QuestionDto, Question>().ReverseMap();
+        CreateMap<Question, QuestionDto>();
+        CreateMap<AnswerOption, AnswerOptionDto>();
+        CreateMap<UpdateQuestionRequestDto, Question>();
     }
 }

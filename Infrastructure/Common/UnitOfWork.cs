@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Common;
 
-public class UnitOfWork : IUnitOfWork, IAsyncDisposable
+public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDBContext _context;
     private readonly ILogger<UnitOfWork> _logger;
@@ -30,6 +30,7 @@ public class UnitOfWork : IUnitOfWork, IAsyncDisposable
         Lectures = new GenericRepository<Lecture>(context);
         ExamResults = new GenericRepository<ExamResult>(context);
         Questions = new GenericRepository<Question>(context);
+        AnswerOptions = new GenericRepository<AnswerOption>(context);
         Instructors = new GenericRepository<Instructor>(context);
         Enrollments = new GenericRepository<Enrollment>(context);
         ApplicationUsers = new GenericRepository<ApplicationUser>(context);

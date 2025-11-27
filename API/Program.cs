@@ -3,6 +3,7 @@ using API.Handlers;
 using Application;
 using Application.Features.Courses.Commands.CreateCourse;
 using Application.Features.Courses.Mappers;
+using Application.Features.Exam.Mappers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
 
@@ -49,8 +50,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<CreateCourseCommand>());
 
-builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(CourseProfile).Assembly));
-
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddMaps(typeof(CourseProfile).Assembly);
+    cfg.AddMaps(typeof(QuestionsProfile).Assembly);
+});
+// Replace AddOpenApi() with AddSwaggerGen and an OpenAPI document
 
 #region Swagger Config
 

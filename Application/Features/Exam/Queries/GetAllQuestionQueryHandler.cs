@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Exam.Queries;
 
-public class GetAllQuestionQueryHandler:IRequestHandler<GetAllQuestionQuery,Result<List<QuestionDto>>>
+public class GetAllQuestionQueryHandler : IRequestHandler<GetAllQuestionQuery, Result<List<QuestionDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IGenericRepository<Question> _questions;
@@ -18,9 +18,14 @@ public class GetAllQuestionQueryHandler:IRequestHandler<GetAllQuestionQuery,Resu
         _questions = Questions;
     }
 
-    public async Task<Result<List<QuestionDto>>> Handle(GetAllQuestionQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<QuestionDto>>> Handle(GetAllQuestionQuery request,
+        CancellationToken cancellationToken)
     {
-        var questions = await _questions.GetAllAsync();
+        if (request == null)
+            return Result.Error("Question not found");
+        var questions = await _questions.FindAllAsync(q => q.AnswerOptions != null,
+            new[] { "AnswerOptions" });
+
         var questionDtos = _mapper.Map<List<QuestionDto>>(questions);
         return Result.Success(questionDtos);
     }

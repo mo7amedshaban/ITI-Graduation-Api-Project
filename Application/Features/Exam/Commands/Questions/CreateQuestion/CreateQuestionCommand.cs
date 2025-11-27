@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.Features.Exam.Commands.Questions.CreateQuestion;
 
-public record CreateQuestionCommand(QuestionDto questionDto) : IRequest<Result<QuestionDto>>;
+public record CreateQuestionCommand(CreateQuestionRequestDto dto) : IRequest<Result<QuestionDto>>;

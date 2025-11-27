@@ -1,7 +1,7 @@
 using Application.Features.Students.DTOs;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Features.Exam.DTOs;
-
 
 public class ExamDto
 {
@@ -16,22 +16,45 @@ public class ExamDto
     public List<QuestionDto> Questions { get; set; } = new();
 }
 
+public class CreateQuestionRequestDto
+{
+    public string Text { get; set; } = default!;
+    public decimal Points { get; set; }
+    public IFormFile? Image { get; set; }
+
+    public string? ImageUrl { get; set; }
+
+    public List<AnswerOptionDto> AnswerOptions { get; set; } = new();
+}
+
+public class UpdateQuestionRequestDto
+{
+    public Guid Id { get; set; }
+    public string Text { get; set; } = default!;
+    public decimal Points { get; set; }
+    public IFormFile? Image { get; set; }
+
+    public string? ImageUrl { get; set; }
+
+    public List<AnswerOptionDto> AnswerOptions { get; set; } = new();
+}
+
 public class QuestionDto
 {
     public Guid Id { get; set; }
     public string Text { get; set; } = default!;
-
     public decimal Points { get; set; } = default!;
-
-    //public int Order { get; set; } = default!;
     public string? ImageUrl { get; set; }
 
-    public List<AnswerOptionDto> Answers { get; set; } = new();
+
+    public List<AnswerOptionDto> AnswerOptions { get; set; } = new();
 }
 
 public class AnswerOptionDto
 {
+    // [JsonIgnore] 
     public Guid Id { get; set; }
+
     public string Text { get; set; } = default!;
     public bool IsCorrect { get; set; }
 }

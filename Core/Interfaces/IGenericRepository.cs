@@ -17,7 +17,7 @@ public interface IGenericRepository<T> where T : class
     IEnumerable<T> FindAll(Expression<Func<T, bool>> criteria, int? take, int? skip,
         Expression<Func<T, object>> orderBy = null, string orderByDirection = "ASC");
 
-    Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> criteria, string[] includes = null);
+    Task<List<T>> FindAllAsync(Expression<Func<T, bool>> criteria, string[] includes = null);
     Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> criteria, int skip, int take);
 
     Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> criteria, int? skip, int? take,
