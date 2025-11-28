@@ -7,7 +7,7 @@ namespace Core.Entities;
 
 public class Instructor : AuditableEntity
 {
-    [ForeignKey("User")] public Guid? UserId { get; private set; }
+    [ForeignKey("User")] public Guid? UserId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
