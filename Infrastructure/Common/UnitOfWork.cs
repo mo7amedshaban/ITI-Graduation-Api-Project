@@ -36,6 +36,7 @@ public class UnitOfWork : IUnitOfWork
         ApplicationUsers = new GenericRepository<ApplicationUser>(context);
         ZoomMeetings = new GenericRepository<ZoomMeeting>(context);
         ZoomRecordes = new GenericRepository<ZoomRecording>(context);
+        Certificates = new GenericRepository<Certificate>(context);
     }
 
     public IGenericRepository<ApplicationUser> ApplicationUsers { get; }
@@ -51,6 +52,7 @@ public class UnitOfWork : IUnitOfWork
     public IGenericRepository<ExamResult> ExamResults { get; }
     public IGenericRepository<ZoomRecording> ZoomRecordes { get; }
     public IGenericRepository<ZoomMeeting> ZoomMeetings { get; }
+    public IGenericRepository<Certificate> Certificates { get; }
 
     // public IGenericRepository<Instructor> Instructors => new GenericRepository<Instructor>(_context);
     // public IGenericRepository<Course> Courses => new GenericRepository<Course>(_context);

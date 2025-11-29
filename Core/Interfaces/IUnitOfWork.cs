@@ -22,6 +22,8 @@ public interface IUnitOfWork : IAsyncDisposable
     IGenericRepository<ExamResult> ExamResults { get; }
     IGenericRepository<ZoomRecording> ZoomRecordes { get; }
     IGenericRepository<ZoomMeeting> ZoomMeetings { get; }
+    IGenericRepository<Certificate> Certificates { get; }
+    
     Task<int> CompleteAsync(CancellationToken cancellationToken = default);
 
     /// <summary>

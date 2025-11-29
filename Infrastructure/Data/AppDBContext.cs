@@ -49,6 +49,8 @@ public partial class AppDBContext : IdentityDbContext<ApplicationUser, IdentityR
     public virtual DbSet<ZoomMeeting> ZoomMeetings { get; set; }
 
     public virtual DbSet<ZoomRecording> ZoomRecordings { get; set; }
+    public virtual DbSet<Certificate> Certificates { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
