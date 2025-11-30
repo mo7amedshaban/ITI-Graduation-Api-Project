@@ -5,8 +5,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Infrastructure.ZoomServices.Dtos
-{
+namespace Core.DTOs
+{ 
     public class ZoomWebhookPayload
     {
         [JsonPropertyName("event")]

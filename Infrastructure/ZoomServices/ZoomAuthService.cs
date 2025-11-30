@@ -1,5 +1,7 @@
-﻿using Infrastructure.Helper;
-using Infrastructure.ZoomServices.Dtos;
+﻿using Core.DTOs;
+using Core.Interfaces.Services;
+using Infrastructure.Helper;
+
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

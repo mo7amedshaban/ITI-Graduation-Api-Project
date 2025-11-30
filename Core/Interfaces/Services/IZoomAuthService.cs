@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infrastructure.ZoomServices
+namespace Core.Interfaces.Services
 {
     public interface IZoomAuthService
     {

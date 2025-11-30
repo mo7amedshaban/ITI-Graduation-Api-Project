@@ -34,6 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="ZoomServices\Dtos\" />
       <Folder Include="ZoomServices\ZoomWebhookService\" />
     </ItemGroup>
 

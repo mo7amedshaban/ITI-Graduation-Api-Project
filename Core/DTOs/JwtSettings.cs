@@ -192,3 +192,6 @@ public class PaymentMethodsResponse
         //public string pendingUrl { get; set; }
     }
 }
+
+
+
