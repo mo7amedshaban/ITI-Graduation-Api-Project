@@ -1,15 +1,17 @@
 using System.Reflection;
+using API.Extensions;
 using API.Handlers;
 using Application;
 using Application.Features.Courses.Commands.CreateCourse;
 using Application.Features.Courses.Mappers;
+using Application.Features.Exam.DTOs;
 using Application.Features.Exam.Mappers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
 
 
 using Core.Interfaces.Services;
-
+using FluentValidation;
 using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Common.GenRepo;
@@ -17,8 +19,7 @@ using Infrastructure.Data;
 using Infrastructure.Extension;
 using Infrastructure.services;
 using Infrastructure.Services;
-
-
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -120,6 +121,14 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
+app.test();
+
+
+
+
+
+
 app.UseStaticFiles();
 
 
