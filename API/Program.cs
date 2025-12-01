@@ -37,6 +37,10 @@ builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseSqlServer(connectionString, b =>
         b.MigrationsAssembly(typeof(AppDBContext).Assembly.FullName));
 });
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 
 
 
