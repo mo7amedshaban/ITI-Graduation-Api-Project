@@ -1,17 +1,13 @@
 using System.Reflection;
+using API.Configurations.Scalar;
 using API.Extensions;
 using API.Handlers;
 using Application;
 using Application.Features.Courses.Commands.CreateCourse;
 using Application.Features.Courses.Mappers;
-using Application.Features.Exam.DTOs;
 using Application.Features.Exam.Mappers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
-
-
-using Core.Interfaces.Services;
-using FluentValidation;
 using Infrastructure;
 using Infrastructure.Common;
 using Infrastructure.Common.GenRepo;
@@ -19,9 +15,9 @@ using Infrastructure.Data;
 using Infrastructure.Extension;
 using Infrastructure.services;
 using Infrastructure.Services;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.WebHost.UseWebRoot("wwwroot");
@@ -45,7 +41,6 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddResponseCaching();
 
 
-
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
@@ -58,17 +53,19 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblyContaining<CreateCourseCommand>());
+builder.Services.AddOpenApi();
 
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddMaps(typeof(CourseProfile).Assembly);
     cfg.AddMaps(typeof(QuestionsProfile).Assembly);
 });
+
 // Replace AddOpenApi() with AddSwaggerGen and an OpenAPI document
+builder.Services.AddEndpointsApiExplorer();
 
 #region Swagger Config
 
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -120,24 +117,17 @@ builder.Services.AddSwaggerGen(c =>
 
 
 builder.Services.AddControllers();
+// Scalar API Reference Configuration with Bearer Security Scheme
+builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
+
+
 // builder.Services.AddResultExceptionHandler();
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
-app.test();
-app.UseResponseCaching();
-
-
-
-
-
-app.UseStaticFiles();
-
-
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -150,37 +140,30 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API V1");
-    c.RoutePrefix = "swagger"; // This makes it available at /swagger
-
-    // For production, you might want to hide the Swagger UI
-    // but keep the JSON available for API consumers
-    if (!app.Environment.IsDevelopment()) c.DocumentTitle = "API Documentation - Production";
-});
-
-#endregion
-
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await services.SeedRolesAsync();
-}
-
-#region Swagger Middleware
-
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API V1");
-    c.RoutePrefix = "swagger"; // This makes it available at /swagger
+    c.RoutePrefix = string.Empty; //"swagger"; // This makes it available at /swagger
 
     if (!app.Environment.IsDevelopment()) c.DocumentTitle = "API Documentation - Production";
 });
 
 #endregion
+
+// Scalar API Reference Middleware
+app.MapOpenApi();
+app.MapScalarApiReference(options =>
+{
+    options.Title = "E-Learning API Reference";
+    options.Theme = ScalarTheme.BluePlanet;
+    options.DefaultHttpClient =
+        new KeyValuePair<ScalarTarget, ScalarClient>(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    options.HideDarkModeToggle = true;
+    options.ShowSidebar = true;
+    options.Favicon = "/favicon.ico"; //add image
+});
 
 app.UseExceptionHandler();
-
+app.test();
+app.UseResponseCaching();
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
