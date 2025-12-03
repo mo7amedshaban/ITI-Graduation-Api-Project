@@ -1,7 +1,9 @@
 ﻿
+using Core.DTOs;
 using Core.Entities.Zoom;
+using Core.Interfaces.Services;
 using Infrastructure.Helper;
-using Infrastructure.ZoomServices.Dtos;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;

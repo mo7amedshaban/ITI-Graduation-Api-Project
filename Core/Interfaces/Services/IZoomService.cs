@@ -1,6 +1,7 @@
 ﻿
+using Core.DTOs;
 using Core.Entities.Zoom;
-using Infrastructure.ZoomServices.Dtos;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infrastructure.ZoomServices
+namespace Core.Interfaces.Services
 {
     public interface IZoomService
     {

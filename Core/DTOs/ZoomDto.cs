@@ -1,4 +1,4 @@
-﻿using Infrastructure.Helper;
+﻿
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Infrastructure.ZoomServices.Dtos
+namespace Core.DTOs
 {
 
     public class ZoomMeetingResponse

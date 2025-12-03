@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Infrastructure.ZoomServices.RecordingService
+namespace Core.Interfaces.Services
 {
     public interface IRecordingService
     {

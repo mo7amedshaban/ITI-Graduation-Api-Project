@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using Core.Common.Results;
+using Core.DTOs;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -25,4 +27,22 @@ public class UserContextService : IUserContextService
         var claim = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Role);
         return claim?.Value ?? string.Empty;
     }
+
+    public Task<Result<UserDto>> GetUserByIdAsync(Guid userId)
+    {
+        var claim = _httpContextAccessor.HttpContext?.User;
+        if (claim != null)
+        {
+            var userDto = new UserDto
+            {
+                Id = userId,
+                FirstName = claim.Identity?.Name ?? "Unknown",
+                Email = claim.FindFirst(ClaimTypes.Email)?.Value,
+                Role = claim.FindFirst(ClaimTypes.Role)?.Value ?? "User"
+            };
+            return Task.FromResult(Result<UserDto>.FromValue(userDto));
+        }
+        return Task.FromResult(Result<UserDto>.FromError(Error.NotFound("User not found")));
+    }
+
 }
