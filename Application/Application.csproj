@@ -22,10 +22,4 @@
         <!--        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>-->
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Common\Behaviours\" />
-        <Folder Include="Features\Students\Queries\StudentAnswer\" />
-        <Folder Include="Features\Zoom\Dtos\" />
-    </ItemGroup>
-
 </Project>
