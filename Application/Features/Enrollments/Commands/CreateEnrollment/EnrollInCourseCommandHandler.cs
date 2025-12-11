@@ -72,7 +72,7 @@ namespace Application.Features.Enrollments.Commands.CreateEnrollment
             await _enrollmentRepository.AddAsync(enrollment);
             await _unitOfWork.CommitAsync(ct);
 
-            //await _cache.RemoveByTagAsync("Enrollment", ct);
+            await _cache.RemoveByTagAsync("Enrollment", ct);
             //await _cache.RemoveByTagAsync("All_Students_With_Course", ct);
 
             return Result<EnrollmentDto>.FromValue(_mapper.Map<EnrollmentDto>(enrollment));

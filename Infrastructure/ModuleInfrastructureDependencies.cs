@@ -50,17 +50,7 @@ public static class ModuleInfrastructureDependencies
             LocalCacheExpiration = TimeSpan.FromSeconds(30), // Local Memory L1
         });
 
-
-
-
-
-        services.AddHybridCache(options => options.DefaultEntryOptions = new HybridCacheEntryOptions
-        {
-            Expiration = TimeSpan.FromMinutes(10), // Distributed( L2, L3)
-            LocalCacheExpiration = TimeSpan.FromSeconds(30) // Local Memory L1
-        });
-
-
+     
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
